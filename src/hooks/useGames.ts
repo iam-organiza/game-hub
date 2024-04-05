@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import apiCilent, { CanceledError } from "../services/api-cilent";
 
+export interface Platform {
+  id: number;
+  slug: string;
+  name: string;
+}
+
 export interface Game {
   id: number;
   slug: string;
@@ -10,11 +16,11 @@ export interface Game {
   background_image: string;
   rating: number;
   rating_top: number;
-  ratings: {};
+  ratings: object | null;
   ratings_count: number;
   reviews_text_count: string;
   added: number;
-  added_by_status: {};
+  added_by_status: object | null;
   metacritic: number;
   playtime: number;
   suggestions_count: number;
@@ -36,20 +42,14 @@ export interface Game {
       | "Adults Only"
       | "Rating Pending";
   };
-  platforms: [
-    {
-      platform: {
-        id: number;
-        slug: string;
-        name: string;
-      };
-      released_at?: string;
-      requirements?: {
-        minimum: string;
-        recommended: string;
-      };
-    }
-  ];
+  platforms: {
+    platform: Platform;
+    released_at?: string;
+    requirements?: {
+      minimum: string;
+      recommended: string;
+    };
+  }[];
 }
 
 export interface GetGamesResponse {
