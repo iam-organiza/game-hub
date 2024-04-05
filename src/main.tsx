@@ -5,9 +5,6 @@ import App from './App.tsx'
 import './index.css'
 import theme from './theme.ts'
 
-console.log(theme.config.initialColorMode);
-
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
