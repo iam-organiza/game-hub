@@ -62,22 +62,20 @@ export interface GetGamesResponse {
 export default function useGames() {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState<
-    "idle" | "processing" | "success" | "failed"
-  >("idle");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    setLoading("processing");
+    setLoading(true);
     apiCilent
       .get<GetGamesResponse>("/games", { signal: controller.signal })
       .then((res) => {
-        setLoading("success");
+        setLoading(false);
         setGames(res.data.results);
       })
       .catch((error) => {
-        setLoading("failed");
+        setLoading(false);
         if (error instanceof CanceledError) return;
         setError(error.message);
       });
