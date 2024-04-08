@@ -12,10 +12,10 @@ function GameGrid() {
             {error.length > 0 && <p>{error}</p>}
             <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 4}} padding={'10px'} spacing={10}>
                 {
-                    loading ? skeletons.map(skeleton => <GameCardSkeleton key={skeleton} />) : null
+                    loading && skeletons.map(skeleton => <GameCardSkeleton key={skeleton} />)
                 }
                 {
-                    games.map(game => <GameCard key={game.id} game={game} />)
+                    !loading && games.map(game => <GameCard key={game.id} game={game} />)
                 }
             </SimpleGrid>
         </>
