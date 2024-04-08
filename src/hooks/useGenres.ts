@@ -15,6 +15,6 @@ export interface GetGenreResponse {
   results: Genre[];
 }
 
-const useGenres = () => useData<Genre>("/games");
+const useGenres = () => useData<Genre>("/genres");
 
 export default useGenres;
