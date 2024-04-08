@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import apiCilent, { CanceledError } from "../services/api-cilent";
+import useData from "./useData";
 
 export interface Platform {
   id: number;
@@ -59,33 +58,6 @@ export interface GetGamesResponse {
   results: Game[];
 }
 
-export default function useGames() {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+const useGames = () => useData<Game>("/games");
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setLoading(true);
-    apiCilent
-      .get<GetGamesResponse>("/games", { signal: controller.signal })
-      .then((res) => {
-        setLoading(false);
-        setGames(res.data.results);
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error instanceof CanceledError) return;
-        setError(error.message);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return {
-    games,
-    error,
-    loading,
-  };
-}
+export default useGames;

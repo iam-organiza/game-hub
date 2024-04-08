@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import apiCilent, { CanceledError } from "../services/api-cilent";
+import useData from "./useData";
 
 export interface Genre {
   id: number;
@@ -16,33 +15,6 @@ export interface GetGenreResponse {
   results: Genre[];
 }
 
-export default function useGenres() {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+const useGenres = () => useData<Genre>("/games");
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setLoading(true);
-    apiCilent
-      .get<GetGenreResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setLoading(false);
-        setGenres(res.data.results);
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error instanceof CanceledError) return;
-        setError(error.message);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return {
-    genres,
-    error,
-    loading,
-  };
-}
+export default useGenres;
