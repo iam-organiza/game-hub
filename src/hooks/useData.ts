@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiCilent, { CanceledError } from "../services/api-cilent";
+import { AxiosRequestConfig } from "axios";
 
 export interface GetDataResponse<T> {
   count: number;
@@ -8,17 +9,33 @@ export interface GetDataResponse<T> {
   results: T[];
 }
 
-export default function useData<T>(url: string) {
+function isValidJsonString(str: string): boolean {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+export default function useData<T>(url: string, jsonRequestConfig?: string) {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
+    let requestConfig = {} as AxiosRequestConfig;
+    if (jsonRequestConfig && isValidJsonString(jsonRequestConfig)) {
+      requestConfig = JSON.parse(jsonRequestConfig);
+    }
 
     setLoading(true);
     apiCilent
-      .get<GetDataResponse<T>>(url, { signal: controller.signal })
+      .get<GetDataResponse<T>>(url, {
+        signal: controller.signal,
+        ...requestConfig,
+      })
       .then((res) => {
         setLoading(false);
         setData(res.data.results);
@@ -30,7 +47,7 @@ export default function useData<T>(url: string) {
       });
 
     return () => controller.abort();
-  }, [url]);
+  }, [url, jsonRequestConfig]);
 
   return {
     data,
