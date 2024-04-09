@@ -14,13 +14,6 @@ export interface Genre {
   }[];
 }
 
-export interface GetGenreResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: Genre[];
-}
-
 const useGenres = () => useData<Genre>("/genres");
 
 export default useGenres;

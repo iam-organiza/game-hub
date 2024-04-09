@@ -1,12 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import useData from "./useData";
 import { Genre } from "./useGenres";
-
-export interface Platform {
-  id: number;
-  slug: string;
-  name: string;
-}
+import { Platform } from "./usePlatforms";
 
 export interface Game {
   id: number;
@@ -51,13 +46,6 @@ export interface Game {
       recommended: string;
     };
   }[];
-}
-
-export interface GetGamesResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: Game[];
 }
 
 const useGames = (selectedGenre: Genre | null) =>
