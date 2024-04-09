@@ -2,12 +2,22 @@ import {Grid, GridItem, Show} from '@chakra-ui/react'
 import {GameGrid, GenreList, NavBar, PlatformList} from './components'
 import {useState} from 'react'
 import {Genre} from './hooks/useGenres'
+import {Platform} from './hooks/usePlatforms';
+
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+}
 
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   const handleOnSelectGenre = (genre: Genre | null) => {
-    setSelectedGenre(genre);
+    setGameQuery({...gameQuery, genre});
+  }
+
+  const handleOnSelectPlatform = (platform: Platform | null) => {
+    setGameQuery({...gameQuery, platform});
   }
 
   return (
@@ -23,12 +33,12 @@ function App() {
       </GridItem>
       <Show above='lg'>
         <GridItem area={'aside'} paddingX={5}>
-          <GenreList selectedGenre={selectedGenre} onSelect={handleOnSelectGenre} />
+          <GenreList selectedGenre={gameQuery.genre} onSelect={handleOnSelectGenre} />
         </GridItem>
       </Show>
       <GridItem area={'main'}>
-        <PlatformList />
-        <GameGrid selectedGenre={selectedGenre} />
+        <PlatformList selectedPlatform={gameQuery.platform} onSelect={handleOnSelectPlatform} />
+        <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
   )

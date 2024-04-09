@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import useData from "./useData";
-import { Genre } from "./useGenres";
 import { Platform } from "./usePlatforms";
+import { GameQuery } from "../App";
 
 export interface Game {
   id: number;
@@ -48,11 +48,14 @@ export interface Game {
   }[];
 }
 
-const useGames = (selectedGenre: Genre | null) =>
+const useGames = (gameQuery: GameQuery) =>
   useData<Game>(
     "/games",
     JSON.stringify({
-      params: { genres: selectedGenre?.id },
+      params: {
+        genres: gameQuery.genre?.id,
+        parent_platforms: gameQuery.platform?.id,
+      },
     } as AxiosRequestConfig)
   );
 
