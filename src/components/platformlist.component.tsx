@@ -16,7 +16,6 @@ function PlatformList({onSelect, selectedPlatform}: Props) {
         <Menu>
             <MenuButton as={Button} rightIcon={<BsChevronDown />}>{selectedPlatform?.name || 'Platform'}</MenuButton>
             <MenuList>
-                <MenuItem onClick={() => onSelect(null)}>All</MenuItem>
                 {
                     platforms.map(platform => (
                         <MenuItem onClick={() => onSelect(platform)} key={platform.id}>{platform.name}</MenuItem>

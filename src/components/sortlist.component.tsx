@@ -15,7 +15,7 @@ function SortList({list, gameQuery, onSelect}: Props) {
             <MenuList>
                 {
                     list.map(item => (
-                        <MenuItem key={item.id} onClick={() => onSelect(item)}>{item.name}</MenuItem>
+                        <MenuItem key={item.id} onClick={() => onSelect(item)} value={item.slug}>{item.name}</MenuItem>
                     ))
                 }
             </MenuList>

@@ -27,16 +27,10 @@ function GenreList({onSelect, selectedGenre}: Props) {
                     ))}</List>
                 }
 
-                <ListItem paddingY={'5px'}>
-                    <HStack>
-                        <Button onClick={() => onSelect(null)} variant={'link'} fontSize={'lg'}>All</Button>
-                    </HStack>
-                </ListItem>
-
                 {!loading && genres.map(genre => (
                     <ListItem key={genre.slug} paddingY={'5px'}>
                         <HStack>
-                            <Image boxSize={'32px'} borderRadius={8} src={getCroppedImageUrl(genre.image_background)} alt={genre.slug} />
+                            <Image boxSize={'32px'} borderRadius={8} src={genre.image_background && getCroppedImageUrl(genre.image_background)} alt={genre.slug} />
                             <Button fontWeight={selectedGenre?.id === genre.id ? 'bold' : 'normal'} textAlign={'left'} style={{textWrap: 'balance'}} onClick={() => onSelect(genre)} variant={'link'} fontSize={'lg'}>{genre.name}</Button>
                         </HStack>
                     </ListItem>
