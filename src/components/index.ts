@@ -8,3 +8,4 @@ export { default as GenreList } from "./genrelist.component";
 export { default as PlatformIconList } from "./platformiconlist.component";
 export { default as PlatformList } from "./platformlist.component";
 export { default as SortList } from "./sortlist.component";
+export { default as SearchInput } from "./searchinput.component";
