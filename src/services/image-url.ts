@@ -1,4 +1,4 @@
-import noImage from "../assets/No-Image-Placeholder.svg.png";
+import noImage from "../assets/no-image-placeholder.webp";
 
 function getCroppedImageUrl(url: string) {
   if (!url) return noImage;
